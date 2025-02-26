@@ -69,26 +69,26 @@ The results of the programs are available in the report at the link:
 
 
 
-### Objectives
+## Objectives
 1. Gain experience using Java Mail API to send emails from a Spring application.
 2. Deepen understanding of the purpose and configuration of mail servers.
 3. Improve knowledge of data flow processes in web applications deployed on a web server.
 
 
 
-### Task Description
+## Task Description
 Enhance the Spring application from [Lab Work #4](https://github.com/InessaRepeshko/java-based-web-apps/tree/main/lab4-5/WebAppsRIVLab4) by adding functionality to send an email to a specified address using the email service [Ethereal](https://ethereal.email/).
 
 
 
 ## Implementation Stages
-1. Mail Server Setup
-    - Configure an email account to act as a mail server.
-    - Configure SMTP settings for sending emails.
+### 1. Mail Server Setup
+- Configure an email account to act as a mail server.
+- Configure SMTP settings for sending emails.
 
-2. Develop Email Sending Functionality
-    - Programmatically generate an email message.
-    - Send the email using Java Mail API integrated with Spring Boot.
+### 2. Develop Email Sending Functionality
+- Programmatically generate an email message.
+- Send the email using Java Mail API integrated with Spring Boot.
 
 
 
