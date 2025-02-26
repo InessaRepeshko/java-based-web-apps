@@ -14,7 +14,7 @@
 
 
 ## Task Description
-Enhance the Spring application developed in [Lab Work #3](https://github.com/InessaRepeshko/java-based-web-apps/tree/main/lab3/WebAppsRIVLab3) by adding authentication and authorization functionality using Spring Security.
+Enhance the Spring application developed in [Lab Work #3](https://github.com/InessaRepeshko/java-based-web-apps/tree/main/lab3) by adding authentication and authorization functionality using Spring Security.
 
 The application must:
 - Enable user registration with login and password storage.
@@ -77,7 +77,7 @@ The results of the programs are available in the report at the link:
 
 
 ## Task Description
-Enhance the Spring application from [Lab Work #4](https://github.com/InessaRepeshko/java-based-web-apps/tree/main/lab4-5/WebAppsRIVLab4) by adding functionality to send an email to a specified address using the email service [Ethereal](https://ethereal.email/).
+Enhance the Spring application from [Lab Work #4](https://github.com/InessaRepeshko/java-based-web-apps/tree/main/lab4-5) by adding functionality to send an email to a specified address using the email service [Ethereal](https://ethereal.email/).
 
 
 
