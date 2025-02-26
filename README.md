@@ -11,14 +11,12 @@ The course provides knowledge to create, debug, and deploy web applications in J
     <tr>
         <th>Lab Training</th>
         <th>Topic</th>
-        <th>Summary</th>
         <th>Report</th>
         <th>Score</th>
     </tr>
     <tr>
         <td><a href="https://github.com/InessaRepeshko/java-based-web-apps/tree/main/lab1">Lab 1</a></td>
         <td>Exploring the Java technology stack for creating and deploying web applications using servlets and JSP</td>
-        <td>Basics of Java web application development. Purpose and current state of development of Java EE technologies. A typical scheme for creating and deploying web applications in Java that implement data manipulation in databases, a stack of technologies for their creation. Servlets and Java Servlet Pages (JPA). Purpose and life cycle of servlets and JPA. Principles of using servlets. Interfaces for storing request and response parameters. Servlet context. Passing parameters to servlets. Setting up servlet addressing. Redirection and servlet redirection. Purpose, structure, syntax and life cycle of JSP. Organization of interaction of servlets and JSP. Features of building and debugging projects with JSP. Expression Language (EL). Features of obtaining data in EL structures. Purpose and characteristics of JSTL tag groups.</td>
         <td><a href="https://github.com/InessaRepeshko/java-based-web-apps/blob/main/reports/RepeshkoIV_CS222a_Lab1.pdf">lab1-report.pdf</a></td>
         <td>100</td>
     </tr>
