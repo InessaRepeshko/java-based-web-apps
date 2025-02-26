@@ -1,5 +1,7 @@
 # Laboratory Training 1 "Exploring the Java technology stack for creating and deploying web applications using servlets and JSP"
 
+
+
 ## Objectives
 1. Reinforce knowledge of deploying and configuring the software required for developing web applications using the Java EE technology stack. 
 2. Gain an understanding of the structure of Java web applications and the process of their development. 
@@ -8,6 +10,8 @@
 5. Acquire experience in implementing page transitions using the forward and `sendRedirect()` methods. 
 6. Gain practical experience in creating Java Server Pages (JSP). 
 7. Learn how to implement data exchange between servlets and JSP.
+
+
 
 ## Tasks
 ### Task 1
@@ -32,6 +36,8 @@ Modify the project from Task 2 by adding functionality to navigate to a predefin
 Develop a web application with the following functionality:
 - Display a login page with fields for entering a username and password; upon correct input, the main application page should open.
 - Display a menu on the main page, allowing navigation to a JSP page with an employee list presented in a table, without using Expression Language (EL) and Java Standard Tag Library (JSTL).
+
+
 
 ## Examples of program results
 
