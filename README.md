@@ -40,14 +40,13 @@ The course provides knowledge to create, debug, and deploy web applications in J
         <td><a href="_">Lab 4</a></td>
         <td>Study of the principles of using Spring Security to implement authentication, authorization and session support</td>
         <td>Implementation of authentication and authorization by means of Spring Security. Concept of ServletFilter, typical situations of their application. Java components for working with sessions and cookies.</td>
-        <td><a href="_">lab4-report.pdf</a></td>
+        <td rowspan="2"><a href="_">lab4-report.pdf</a></td>
         <td>100</td>
     </tr>
     <tr>
         <td><a href="_">Lab 5</a></td>
         <td>Study of Java components for organizing email distribution</td>
         <td>Java Mail Service as a component of Java EE. Basic concepts for organizing email sending. Java implementation of sending mail and files via Google.</td>
-        <td><a href="_">lab5-report.pdf</a></td>
         <td>100</td>
     </tr>
 </table><br />
