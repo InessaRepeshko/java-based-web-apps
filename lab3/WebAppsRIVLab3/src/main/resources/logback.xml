@@ -1,0 +1,24 @@
+<configuration>
+<!--    <conversionRule conversionWord="highlight" converterClass="ch.qos.logback.classic.pattern.color.HighlightCompositeConverter" />-->
+<!--    <conversionRule conversionWord="clr" class="ch.qos.logback.classic.pattern.color.ForegroundCompositeConverterBase" />-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}   [%-5level]   %-55logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>app.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>-->
+
+<!--    <logger name="ntukhpi.csit.semit.riv.webappsrivlab3" level="DEBUG" />-->
+<!--    <logger name="ntukhpi.csit.semit.riv.webappsrivlab3" level="TRACE" />-->
+    <logger name="ntukhpi.csit.semit.riv.webappsrivlab3" level="INFO" />
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

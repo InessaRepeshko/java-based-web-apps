@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${mode.getValue() + ' User'}">User Form</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/image/icon/favicon_square.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<header th:replace="~{component/NavigationBar :: header}"></header>
+
+<div th:replace="~{component/ErrorToast :: errorToast}"></div>
+<div th:replace="~{component/WarningToast :: warningToast}"></div>
+<div th:replace="~{component/SuccessToast :: successToast}"></div>
+
+<div class="container w-75 text-center justify-content-center">
+    <div class="card border border-3 border-info-subtle shadow bg-body-tertiary rounded m-0 mt-5 p-0"
+         th:with="
+         isEditOrDelete=${mode != null and (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).EDIT
+         or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE)},
+         isDeleteOrView=${mode != null and (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE
+         or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).VIEW_FORM)},
+         isNotDeleteAndNotView=${mode != null and (mode ne T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE
+         and mode ne T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).VIEW_FORM)}">
+        <div class="card-header bg-info-subtle border-bottom border-3 border-info-subtle
+                    font-monospace text-center text-info fw-bolder" id="formHeader"
+             th:text="${mode.getValue() + ' User'}">
+            User Form
+        </div>
+
+        <form class="card-body bg-light font-monospace p-5 m-0" id="userForm"
+              th:object="${user}"
+              th:with="actionUrl=
+                       ${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).ADD ? '/users/add' :
+                        (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).VIEW_FORM ? '/users/view' :
+                        (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).EDIT ? ('/users/' + user?.id + '/edit') :
+                        (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE ? ('/users/' + user?.id + '/delete') : '')))}"
+              th:action="@{${actionUrl}}"
+              th:method="'post'">
+
+            <div class="d-none card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded">
+                    <label for="inputUserId" class="col-4 input-group-text text-info">Id</label>
+                    <input id="inputUserId" class="col-auto form-control text-dark" type="hidden" required
+                           th:field="*{id}"
+                           th:minlength="1" th:maxlength="100"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded">
+                    <label for="inputCorporateEmail" class="col-3 input-group-text text-info">Corporate Email</label>
+                    <input id="inputCorporateEmail" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{corporateEmail}"
+                           th:minlength="17" th:maxlength="123"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded">
+                    <label for="inputUsername" class="col-3 input-group-text text-info">Username</label>
+                    <input id="inputUsername" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{username}"
+                           th:minlength="8" th:maxlength="32"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded">
+                    <label for="inputSurname" class=" col-3 input-group-text text-info">Surname</label>
+                    <input id="inputSurname" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{surname}"
+                           th:minlength="1" th:maxlength="50"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded">
+                    <label for="inputName" class=" col-3 input-group-text text-info">Name</label>
+                    <input id="inputName" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{name}"
+                           th:minlength="1" th:maxlength="50"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputPatronymic" class=" col-3 input-group-text text-info">Patronymic</label>
+                    <input id="inputPatronymic" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{patronymic}"
+                           th:minlength="1" th:maxlength="50"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text d-flex align-content-center justify-content-start mb-4">
+                <div class="col-3 border border-1 border-info-subtle rounded d-inline-flex p-0 m-0 me-1">
+                    <span class="d-flex flex-fill input-group-text text-info">Role</span>
+                </div>
+
+                <div class="col">
+                    <select class="form-select border border-1 border-info-subtle" aria-label="Role list select"
+                            th:field="*{role}" required
+                            th:disabled="${isDeleteOrView}">
+                        <option th:selected="true"
+                                th:value="${mode ne T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).ADD
+                                          ? user?.role : null}"
+                                th:text="${mode ne T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).ADD
+                                      ? user?.role?.getFormattedName() : 'Select a Role'}">
+                            Select a Role
+                        </option>
+
+                        <div th:each="role : ${roleList}">
+                            <option th:value="${role?.name()}"
+                                    th:text="${role?.getFormattedName()}">
+                            </option>
+                        </div>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-evenly">
+                <button type="submit" class="btn btn-outline-info border-2"
+                        th:title="'Save record'"
+                        th:if="${isNotDeleteAndNotView}">
+                    <i class="bi bi-floppy"></i>
+                </button>
+
+                <button type="reset" class="btn btn-outline-info border-2"
+                        onclick="form.reset()"
+                        th:title="'Reset fields'"
+                        th:if="${isNotDeleteAndNotView}">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+                <button type="button" class="btn btn-outline-info border-2"
+                        onclick="submitConfirmation()"
+                        th:title="'Delete record'"
+                        th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE}">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="d-flex justify-content-center mt-5">
+        <a class="btn btn-outline-info" type="button"
+           th:title="'Go to User Table'"
+           th:href="@{/users}">
+            <i class="bi bi-table"></i>
+        </a>
+    </div>
+</div>
+
+<footer th:replace="~{component/Footer :: footer}"></footer>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        fillUsernameOnCorpEmail();
+        setAllInputsValidity();
+    });
+
+    function fillUsernameOnCorpEmail() {
+        const corporateEmailInput = document.getElementById("inputCorporateEmail");
+        const usernameInput = document.getElementById("inputUsername");
+
+        corporateEmailInput.addEventListener("input", function () {
+            const emailValue = corporateEmailInput.value;
+            const atIndex = emailValue.indexOf("@");
+
+            if (atIndex > 0) {
+                usernameInput.value = emailValue.substring(0, atIndex);
+            } else {
+                usernameInput.value = "";
+            }
+        });
+    }
+
+    function setAllInputsValidity() {
+        setPatternAttr();
+        setAllStringInputValidity();
+
+        const form = document.getElementById('userForm');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.reportValidity();
+            } else {
+                form.submit();
+            }
+        });
+
+        function setPatternAttr() {
+            const regexUsername = /^(?=.{8,32}$)[a-zA-Z0-9\W]+$/;
+            const regexCorporateEmail = new RegExp("^[a-z](\\.?[a-z]+){1,99}@[a-z]{1,10}\\.khpi\\.edu\\.ua$");
+            // const regexUsername = new RegExp("^(?=.{8,32}$)[a-zA-Z0-9._-]+$");
+            const regexNames = new RegExp("^(?=.{1,50}$)[А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?(?:[ \\-][А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?)*$");
+
+            document.getElementById('inputCorporateEmail').setAttribute('pattern', regexCorporateEmail.source);
+            document.getElementById('inputUsername').setAttribute('pattern', regexUsername.source);
+            document.getElementById('inputSurname').setAttribute('pattern', regexNames.source);
+            document.getElementById('inputName').setAttribute('pattern', regexNames.source);
+            document.getElementById('inputPatronymic').setAttribute('pattern', regexNames.source);
+        }
+
+
+        function setAllStringInputValidity() {
+            const messages = [
+                "The corporate email should match the format 'name.surname@faculty.khpi.edu.ua'.",
+                "The username must contain Latin letters and may contain numbers and special characters '.', '_', '-'.",
+                "Value must be Ukrainian char string between 1 and 50 chars long, including space and apostrophe.",
+                "Value must be Ukrainian char string between 1 and 50 chars long, including space and apostrophe.",
+                "Value must be Ukrainian char string between 1 and 50 chars long, including space and apostrophe."
+            ];
+
+            document.getElementById('userForm')
+                .querySelectorAll('input[pattern]')
+                .forEach((input, i) => {
+                    input.addEventListener('input', function () {
+                        if (this.validity.patternMismatch) {
+                            this.setCustomValidity(messages[i]);
+                        } else {
+                            this.setCustomValidity('');
+                        }
+
+                        this.reportValidity();
+                    });
+                });
+        }
+    }
+
+    function submitConfirmation() {
+        const message = 'Are you sure you want to delete that record?';
+
+        if (confirm(message) === true) {
+            document.getElementById('userForm').submit();
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

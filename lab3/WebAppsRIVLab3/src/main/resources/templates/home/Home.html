@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/image/icon/favicon_square.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<header th:replace="~{component/NavigationBar :: header}"></header>
+
+<div class="container" style="flex: 90%; max-width: 90%">
+    <div class="bg-info-subtle border border-3 rounded-pill border-info-subtle
+               fs-1 fw-semibold font-monospace text-info text-center shadow-lg p-3 my-5 bg-body-tertiary rounded mb-5">
+        <span th:text="${userLogin != null} ? ('Welcome, ' + ${userLogin} + '!') : _ ">Welcome to Student Database Viewer!</span>
+    </div>
+
+    <div class="col m-0 p-0 d-flex flex-wrap gap-4 justify-content-between">
+
+        <div class="row gap-4 align-self-start" style="flex: 33%; max-width: 33%">
+            <div class=" card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    Software developer info
+                </div>
+                <div class="card-body bg-light font-monospace">
+                    <p class="card-text text-secondary-emphasis fw-light">
+                        Name:
+                        <span class="text-primary-emphasis fw-medium fst-italic ms-3">Repeshko Inessa</span>
+                    </p>
+                    <p class="card-text text-secondary-emphasis fw-light">
+                        Group:
+                        <span class="text-primary-emphasis fw-medium fst-italic ms-3">CS-222a</span>
+                    </p>
+                    <p class="card-text text-secondary-emphasis fw-light">
+                        Department:
+                        <span class="text-primary-emphasis fw-medium fst-italic ms-3">SEMIT</span>
+                    </p>
+                    <p class="card-text text-secondary-emphasis fw-light">
+                        Year:
+                        <span class="text-primary-emphasis fw-medium fst-italic ms-3">2024</span>
+                    </p>
+                    <p class="card-text text-secondary-emphasis fw-light">
+                        Page access time:
+                        <span class="text-primary-emphasis fw-medium fst-italic ms-3"
+                              th:text="${#dates.format(#dates.createNow(), 'dd.MM.yyyy HH:mm:ss')}">
+                            </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class=" card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded placeholder-wave">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    <span class="placeholder w-75 bg-info placeholder-lg"></span>
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <p class="placeholder w-100 bg-secondary"></p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <ul>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-info disabled placeholder col-2" aria-disabled="true"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded placeholder-wave">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    <span class="placeholder w-75 bg-info placeholder-lg"></span>
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <p class="placeholder w-100 bg-secondary"></p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <ul>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-info disabled placeholder col-2" aria-disabled="true"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gap-4 align-self-start" style="flex: 33%; max-width: 33%">
+            <div class=" card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    Entrant Table
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p>Table with data on entrants of a certain higher education institution in Ukraine.</p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="p-0 m-0">The table contains the following information about entrants:</p>
+                        <ul>
+                            <li><code class="text-info">Long</code> unique identifier;</li>
+                            <li><code class="text-info">String</code> case number of the personal file;</li>
+                            <li><code class="text-info">String</code> surname;</li>
+                            <li><code class="text-info">String</code> name;</li>
+                            <li><code class="text-info">String</code> patronymic;</li>
+                            <li><code class="text-info">LocalDate</code> date of birth;</li>
+                            <li><code class="text-info">Boolean</code> gender;</li>
+                            <li><code class="text-info">Double</code> rating score.</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <a th:href="@{/entrants}" class="btn btn-outline-info" role="button">
+                            <i class="bi bi-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded placeholder-wave">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    <span class="placeholder w-75 bg-info placeholder-lg"></span>
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <p class="placeholder w-100 bg-secondary"></p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <ul>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-info disabled placeholder col-2" aria-disabled="true"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded placeholder-wave">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    <span class="placeholder w-75 bg-info placeholder-lg"></span>
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <p class="placeholder w-100 bg-secondary"></p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <ul>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-info disabled placeholder col-2" aria-disabled="true"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gap-4 align-self-start" style="flex: 33%; max-width: 33%">
+            <div class="card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    Student Table
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p>Table with data on students of a certain higher education institution in Ukraine.</p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="p-0 m-0">The table contains the following information about students:</p>
+                        <ul>
+                            <li><code class="text-info">Long</code> unique identifier;</li>
+                            <li><code class="text-info">Entrant</code> owner of personal information;</li>
+                            <li><code class="text-info">FundingType</code> funding type under the study agreement
+                                (contract or budget);
+                            </li>
+                            <li><code class="text-info">ScholarshipStatus</code> scholarship accrual status (none,
+                                ordinary or enhanced);
+                            </li>
+                            <li><code class="text-info">String</code> address of corporate mail in NTU "KhPI".</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <a th:href="@{/students}" class="btn btn-outline-info" role="button">
+                            <i class="bi bi-table"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded placeholder-wave">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle
+                        font-monospace text-center text-info-emphasis fw-bolder">
+                    <span class="placeholder w-75 bg-info placeholder-lg"></span>
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <p class="placeholder w-100 bg-secondary"></p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <ul>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-info disabled placeholder col-2" aria-disabled="true"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-0 border border-2 border-info-subtle shadow bg-body-tertiary rounded placeholder-wave">
+                <div class="card-header bg-info-subtle border-bottom border-2 border-info-subtle font-monospace text-center text-info-emphasis fw-bolder">
+                    <span class="placeholder w-75 bg-info placeholder-lg"></span>
+                </div>
+
+                <div class="card-body bg-light font-monospace">
+                    <div class="card-text text-secondary-emphasis fw-light">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <p class="placeholder w-100 bg-secondary"></p>
+                    </div>
+
+                    <div class="border-start border-info-subtle  border-5 bg-body-secondary p-3 mb-3">
+                        <p class="placeholder w-100 bg-secondary"></p>
+                        <ul>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                            <li>
+                                <span class="placeholder w-25 bg-info me-3"></span>
+                                <span class="placeholder w-50 bg-secondary "></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-info disabled placeholder col-2" aria-disabled="true"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{component/Footer :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

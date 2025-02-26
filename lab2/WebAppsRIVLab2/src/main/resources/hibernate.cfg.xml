@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- JDBC Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3307/webappsrivlab2?useSSL=false&amp;serverTimezone=Europe/Kiev</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">rootpassword</property>
+        <!--  <property name="connection.pool_size">3</property>-->
+
+        <!--Set UTF-8 charset-->
+        <property name="hibernate.connection.CharSet">utf8</property>
+        <property name="hibernate.connection.characterEncoding">utf8</property>
+        <property name="hibernate.connection.useUnicode">true</property>
+
+        <!-- Hibernate properties -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.highlight_sql">true</property>
+        <property name="hibernate.use_sql_comments">false</property>
+
+        <!-- Enable automatic schema generation -->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <!-- HBM mappings or annotated classes -->
+        <mapping class="ntukhpi.csit.semit.riv.webappsrivlab2.model.entity.entrant.Entrant"/>
+        <mapping class="ntukhpi.csit.semit.riv.webappsrivlab2.model.entity.student.Student"/>
+        <mapping class="ntukhpi.csit.semit.riv.webappsrivlab2.model.util.hibernate.HibernateUtil"/>
+    </session-factory>
+</hibernate-configuration>

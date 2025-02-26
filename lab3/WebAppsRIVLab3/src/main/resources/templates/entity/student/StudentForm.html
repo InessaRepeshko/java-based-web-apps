@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).ADD}"
+           th:text="'Add Student'"></title>
+    <title th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}"
+           th:text="'View Student'"></title>
+    <title th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).EDIT}"
+           th:text="'Edit Student'"></title>
+    <title th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE}"
+           th:text="'Delete Student'"></title>
+    <link rel="icon" type="image/x-icon" th:href="@{/image/icon/favicon_square.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<header th:replace="~{component/NavigationBar :: header}"></header>
+
+<div th:replace="~{component/ErrorToast :: errorToast}"></div>
+<div th:replace="~{component/SuccessToast :: successToast}"></div>
+
+<div class="container w-75 text-center justify-content-center">
+    <div class="card border border-3 border-info-subtle shadow bg-body-tertiary rounded m-0 mt-5 p-0">
+        <div class="card-header bg-info-subtle border-bottom border-3 border-info-subtle
+                    font-monospace text-center text-secondary-emphasis fw-bolder" id="formHeader"
+             th:switch="${mode}">
+            <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).ADD}"
+                  th:text="'Add Student'"></span>
+            <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}"
+                  th:text="'View Student'"></span>
+            <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).EDIT}"
+                  th:text="'Edit Student'"></span>
+            <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE}"
+                  th:text="'Delete Student'"></span>
+            <span th:case="*"
+                  th:text="'Student Form'"></span>
+        </div>
+
+        <form class="card-body bg-light font-monospace p-5 m-0" id="studentForm"
+              th:object="${student}"
+              th:with="actionUrl=
+                       ${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).ADD ? '/students/add' :
+                        (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM ? '/students/view' :
+                        (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).EDIT ? ('/students/' + student.id + '/edit') :
+                        (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE ? ('/students/' + student.id + '/delete') : '')))}"
+              th:action="@{${actionUrl}}"
+              th:method="'post'">
+
+            <div class="d-none card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputStudentId" class="col-4 input-group-text text-info">Id</label>
+                    <input id="inputStudentId" class="col-auto form-control text-dark" type="hidden" required
+                           th:field="*{id}"
+                           th:minlength="1" th:maxlength="100"
+                           th:value="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).EDIT
+                                       or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                       ? student.id : null}"
+                           th:readonly="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                </div>
+            </div>
+
+            <div class="card-text d-flex align-content-center justify-content-start mb-4">
+                <div class="col-3 border border-1 border-info-subtle rounded d-inline-flex p-0 m-0 me-3">
+                    <span class="d-flex flex-fill input-group-text text-info">Entrant</span>
+                </div>
+
+                <div class="col">
+                    <select class="form-select border border-1 border-info-subtle" aria-label="Entrant list select"
+                            th:field="*{entrant.id}" required
+                            th:disabled="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                        <option th:selected="true"
+                                th:value="${mode ne T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).ADD
+                                          ? student.entrant.id : null}"
+                                th:text="${mode ne T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).ADD
+                                      ? student.entrant.surname + ' ' + student.entrant.name + ' ' + student.entrant.patronymic + ', ' + student.entrant.caseNumber
+                                      : 'Select an Entrant'}">
+                            Select an Entrant
+                        </option>
+
+                        <div th:each="entrant : ${entrantList}">
+                            <option th:value="${entrant.id}"
+                                    th:text="${entrant.surname + ' ' + entrant.name + ' ' + entrant.patronymic + ', ' + entrant.caseNumber}">
+                                Entrant
+                            </option>
+                        </div>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card-text d-flex align-content-center justify-content-start mb-4">
+                <div class="col-3 border border-1 border-info-subtle rounded d-inline-flex p-0 m-0 me-3">
+                    <span class="d-flex flex-fill input-group-text text-info">Funding Type</span>
+                </div>
+
+                <div class="col-auto">
+                    <input type="hidden"
+                           th:field="*{fundingType}"
+                           th:value="${student.fundingType.getValue()}"
+                           th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE}">
+
+                    <input id="fundingTypeBudget" type="radio" class="btn-check" autocomplete="off" required
+                           th:field="*{fundingType}"
+                           th:value="${'BUDGET'}"
+                           th:disabled="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}"
+                           onclick="setScholarshipStatus(this)">
+                    <label for="fundingTypeBudget" class="btn btn-outline-info">Budget</label>
+
+                    <input id="fundingTypeContract" type="radio" class="btn-check" autocomplete="off" required
+                           th:field="*{fundingType}"
+                           th:value="${'CONTRACT'}"
+                           th:disabled="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}"
+                           onclick="setScholarshipStatus(this)">
+                    <label for="fundingTypeContract" class="btn btn-outline-info">Contract</label>
+                </div>
+            </div>
+
+            <div class="card-text d-flex align-content-center justify-content-start mb-4">
+                <div class="col-3 border border-1 border-info-subtle rounded d-inline-flex p-0 m-0 me-3">
+                    <span class="d-flex flex-fill input-group-text text-info">Scholarship Status</span>
+                </div>
+
+                <div class="col-auto">
+                    <input type="hidden"
+                           th:field="*{scholarshipStatus}"
+                           th:value="${student.scholarshipStatus.getValue()}"
+                           th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE}">
+
+                    <input id="scholarshipStatusNone" type="radio" class="btn-check" autocomplete="off" required
+                           th:field="*{scholarshipStatus}"
+                           th:value="${'NONE'}"
+                           th:disabled="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                    <label for="scholarshipStatusNone" class="btn btn-outline-info">None</label>
+
+                    <input id="scholarshipStatusOrdinary" type="radio" class="btn-check" autocomplete="off" required
+                           th:field="*{scholarshipStatus}"
+                           th:value="${'ORDINARY'}"
+                           th:disabled="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                    <label for="scholarshipStatusOrdinary" class="btn btn-outline-info">Ordinary</label>
+
+                    <input id="scholarshipStatusEnhanced" type="radio" class="btn-check" autocomplete="off" required
+                           th:field="*{scholarshipStatus}"
+                           th:value="${'ENHANCED'}"
+                           th:disabled="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                    <label for="scholarshipStatusEnhanced" class="btn btn-outline-info">Enhanced</label>
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputCorporateEmail" class="col-3 input-group-text text-info">
+                        Corporate Email
+                    </label>
+                    <input id="inputCorporateEmail" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{corporateEmail}"
+                           th:minlength="17" th:maxlength="123"
+                           th:value="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).EDIT
+                                      or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                       ? student.corporateEmail : null}"
+                           th:readonly="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-evenly">
+                <button type="submit" class="btn btn-outline-info border-2 button-apply"
+                        th:title="'Save record'"
+                        th:if="${mode ne T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                 and mode ne T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                    <i class="bi bi-floppy"></i>
+                </button>
+
+                <button type="reset" class="btn btn-outline-info border-2 button-reset"
+                        onclick="form.reset()"
+                        th:title="'Reset fields'"
+                        th:if="${mode ne T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE
+                                 and mode ne T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_FORM}">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+                <button type="button" class="btn btn-outline-info border-2 button-delete"
+                        onclick="submitConfirmation()"
+                        th:title="'Delete record'"
+                        th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).DELETE}">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-outline-info" type="button"
+                th:title="'Go Back'"
+                onclick="window.history.back()">
+            <i class="bi bi-box-arrow-in-left"></i>
+        </button>
+
+        <a class="btn btn-outline-info ms-5" type="button"
+           th:title="'Go to Student Table'"
+           th:href="@{/students}">
+            <i class="bi bi-table"></i>
+        </a>
+    </div>
+</div>
+
+<footer th:replace="~{component/Footer :: footer}"></footer>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        setAllInputsValidity();
+
+        const title = document.getElementById('formHeader').innerText;
+
+        if (title.match(new RegExp("Add Student|Edit Student"))) {
+            setScholarshipStatus(document.getElementById('fundingTypeBudget'));
+            setScholarshipStatus(document.getElementById('fundingTypeContract'));
+        }
+    });
+
+    function setAllInputsValidity() {
+        setEmailInputValidity();
+
+        const form = document.getElementById('studentForm');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.reportValidity();
+            } else {
+                form.submit();
+            }
+        });
+
+        function setEmailInputValidity() {
+            const regexCorporateEmail = new RegExp("^[a-z](\\.?[a-z]+){1,99}@[a-z]{1,10}\\.khpi\\.edu\\.ua$");
+            document.getElementById('inputCorporateEmail').setAttribute('pattern', regexCorporateEmail.source);
+
+            const message = "The corporate email should match the format 'name.surname@faculty.khpi.edu.ua'.";
+
+            document.getElementById('inputCorporateEmail').addEventListener('input', function () {
+                if (this.validity.patternMismatch) {
+                    this.setCustomValidity(message);
+                } else {
+                    this.setCustomValidity('');
+                }
+
+                this.reportValidity();
+            });
+        }
+    }
+
+    function setScholarshipStatus(inputElement) {
+        const inputId = inputElement.id;
+        const enhancedId = 'scholarshipStatusEnhanced';
+        const ordinaryId = 'scholarshipStatusOrdinary';
+        const inputEnhanced = document.getElementById(enhancedId);
+        const inputOrdinary = document.getElementById(ordinaryId);
+        const lableEnhanced = document.querySelector(`label[for="${enhancedId}"]`);
+        const lableOrdinary = document.querySelector(`label[for="${ordinaryId}"]`);
+
+        if (inputId === 'fundingTypeContract' && inputElement.checked) {
+            inputEnhanced.checked = false;
+            inputEnhanced.disabled = true;
+            lableEnhanced.classList.replace('btn-outline-info', 'btn-outline-secondary');
+
+            inputOrdinary.checked = false;
+            inputOrdinary.disabled = true;
+            lableOrdinary.classList.replace('btn-outline-info', 'btn-outline-secondary');
+
+            document.getElementById('scholarshipStatusNone').checked = true;
+        }
+
+        if (inputId === 'fundingTypeBudget' && inputElement.checked) {
+            inputEnhanced.disabled = false;
+            lableEnhanced.classList.replace('btn-outline-secondary', 'btn-outline-info');
+
+            inputOrdinary.disabled = false;
+            lableOrdinary.classList.replace('btn-outline-secondary', 'btn-outline-info');
+        }
+    }
+
+    function submitConfirmation() {
+        const message = 'Are you sure you want to delete that record?';
+
+        if (confirm(message) === true) {
+            document.getElementById('studentForm').submit();
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

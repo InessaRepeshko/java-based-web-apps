@@ -1,0 +1,48 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<footer class="container-fluid mt-5 p-3 text-center fs-6 bg-info-subtle text-info-emphasis font-monospace">
+    <div class="row w-100 align-items-start justify-content-center p-0 m-0">
+        <div class="col justify-content-around" id="footer-author">
+            <div class="col mb-2 justify-content-around fw-bold text-info">Powered by</div>
+            <div id="author-name">Inessa Repeshko</div>
+            <div id="author-group">CS-222a</div>
+            <div id="author-company">
+                <span id="company-facility">CSIT </span>
+                <span id="company-department">SEMIT</span><br>
+                <span id="company-name">NTU "KhPI"</span>
+            </div>
+        </div>
+
+        <address class="col justify-content-around" id="footer-address">
+            <div class="col mb-2 justify-content-around fw-bold text-info">Address</div>
+            <div id="address-name">National Technical University "Kharkiv Polytechnic Institute"</div>
+            <div id="address-street">2 Kyrpychova</div>
+            <div>
+                <span id="address-postal-code">61002</span>
+                <span id="address-locality">Kharkiv</span>,
+                <span id="address-region">Ukraine</span>
+            </div>
+        </address>
+
+        <address class="col justify-content-around" id="footer-contact">
+            <div class="col mb-2 justify-content-around fw-bold text-info">Contact Us</div>
+            <div id="contact-telephone">
+                <a class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                   id="contact-telephone-link" href="tel:+38(057)7076634">+38-(057)-707-66-34</a>
+            </div>
+            <div id="contact-email">
+                <a class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                   id="contact-email-link" href="mailto:omsroot@kpi.kharkov.ua">omsroot@kpi.kharkov.ua</a>
+            </div>
+        </address>
+    </div>
+
+    <div class="row w-100 align-items-center">
+        <div class="col justify-content-around" id="footer-copyright">
+            <p class="p-0 m-0">Copyright &copy; 2024 All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>

@@ -1,0 +1,26 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}   [%-5level]   %-55logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>app.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>-->
+
+<!--    <logger name="ntukhpi.csit.semit.riv.webappsrivlab4" level="DEBUG" />-->
+<!--    <logger name="ntukhpi.csit.semit.riv.webappsrivlab4" level="TRACE" />-->
+    <logger name="ntukhpi.csit.semit.riv.webappsrivlab4" level="INFO" />
+
+    <logger name="org.springframework.security" level="trace" additivity="false">
+        <appender-ref ref="Console" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

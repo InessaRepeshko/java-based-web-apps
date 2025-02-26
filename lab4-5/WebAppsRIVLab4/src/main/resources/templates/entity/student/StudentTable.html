@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Table</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/image/icon/favicon_square.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<header th:replace="~{component/NavigationBar :: header}"></header>
+
+<div th:replace="~{component/ErrorToast :: errorToast}"></div>
+<div th:replace="~{component/WarningToast :: warningToast}"></div>
+<div th:replace="~{component/SuccessToast :: successToast}"></div>
+
+<div class="mx-3 mt-3 mb-5 font-monospace">
+    <div class="row">
+        <h1 class="text-info fs-1 my-3 fw-semibold text-center">Student Table</h1>
+    </div>
+
+    <div class="row align-items-start">
+        <div class="col-2 mx-2">
+            <div class="card row p-2 mb-4 border border-3 border-info-subtle bg-light shadow">
+                <div class="card-body col">
+                    <div class="card-title row">
+                        <p class="text-info fs-5 fw-bold p-0 m-0">Search</p>
+                        <p class="text-secondary fw-lighter p-0 m-0" style="font-size: 0.8rem;">
+                            Search by full name (matching start, case-insensitive)
+                        </p>
+                    </div>
+
+                    <form class="card-text col mt-3" id="formSearch"
+                          th:method="'get'" th:action="@{/students}">
+                        <div class="row mb-3">
+                            <label for="inputSearch" class="visually-hidden">Search</label>
+                            <input type="search" class="form-control border border-2 border-info-subtle"
+                                   id="inputSearch" name="search" placeholder="Type to search...">
+                        </div>
+
+                        <div class="col d-flex justify-content-evenly align-content-center text-center p-0 m-0">
+                            <a type="button" id="btn-search" onclick="applySearch(this)"
+                               class="btn btn-outline-info border-2" th:alt-title="'Apply Search'">
+                                <i class="bi bi-search"></i>
+                            </a>
+
+                            <a type="button" id="btn-search-reset" onclick="resetSearch(this)"
+                               class="btn btn-outline-info border-2 button-reset" th:title="'Reset Search'">
+                                <i class="bi bi-x-lg"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card row p-2 mb-4 border border-3 border-info-subtle bg-light shadow">
+                <div class="card-body col">
+                    <div class="card-title row">
+                        <p class="text-info fs-5 fw-bold p-0 m-0">Filters</p>
+                    </div>
+
+                    <div class="card-subtitle row mt-2" id="filterFundingType">
+                        <p class="text-info fs-6 fw-bold p-0 m-0">Funding Type</p>
+                    </div>
+
+                    <form class="card-text col mt-2" id="formFilterFundingType"
+                          th:method="'get'" th:action="@{/students}">
+                        <div class="mt-2 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="fundingTypeBudget"
+                                       name="fundingType"
+                                       th:value="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.FundingType).BUDGET.getValue()}">
+                                <label class="form-check-label" for="fundingTypeBudget" style="color: #6f42c1;">
+                                    Budget
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="fundingTypeContract"
+                                       name="fundingType"
+                                       th:value="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.FundingType).CONTRACT.getValue()}">
+                                <label class="form-check-label" for="fundingTypeContract" style="color: #fd7e14;">
+                                    Contract
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col d-flex justify-content-evenly align-content-center text-center p-0 m-0">
+                            <a type="button" id="btn-filter-funding-type" onclick="applyFilterFundingType(this)"
+                               class="btn btn-outline-info border-2" th:title="'Apply Filter'">
+                                <i class="bi bi-funnel"></i>
+                            </a>
+
+                            <a type="button" id="btn-filter-funding-type-reset" onclick="resetFilterFundingType(this)"
+                               class="btn btn-outline-info border-2 button-reset" th:title="'Reset Filter'">
+                                <i class="bi bi-x-lg"></i>
+                            </a>
+                        </div>
+                    </form>
+
+                    <div class="card-subtitle row mt-4" id="filterScholarshipStatus">
+                        <p class="text-info fs-6 fw-bold p-0 m-0">Scholarship Status</p>
+                    </div>
+
+                    <form class="card-text col mt-2" id="formFilterScholarshipStatus"
+                          th:method="'get'" th:action="@{/students}">
+                        <div class="mt-2 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="scholarshipStatusEnhanced"
+                                       name="scholarshipStatus"
+                                       th:value="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.ScholarshipStatus).ENHANCED.getValue()}">
+                                <label class="form-check-label fw-lighter py-0 px-1 m-0" for="scholarshipStatusEnhanced"
+                                       style="color: #20c997;">
+                                    Enhanced
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="scholarshipStatusOrdinary"
+                                       name="scholarshipStatus"
+                                       th:value="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.ScholarshipStatus).ORDINARY.getValue()}">
+                                <label class="form-check-label fw-lighter py-0 px-1 m-0" for="scholarshipStatusOrdinary"
+                                       style="color: #0d6efd;">
+                                    Ordinary
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="scholarshipStatusNone"
+                                       name="scholarshipStatus"
+                                       th:value="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.ScholarshipStatus).NONE.getValue()}">
+                                <label class="form-check-label fw-lighter py-0 px-1 m-0" for="scholarshipStatusNone"
+                                       style="color: #6c757d;">
+                                    None
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col d-flex justify-content-evenly align-content-center text-center p-0 m-0">
+                            <a type="button" id="btn-filter-scholarship-status"
+                               onclick="applyFilterScholarshipStatus(this)"
+                               class="btn btn-outline-info border-2" th:title="'Apply Filter'">
+                                <i class="bi bi-funnel"></i>
+                            </a>
+
+                            <a type="button" id="btn-filter-scholarship-status-reset"
+                               onclick="resetFilterScholarshipStatus(this)"
+                               class="btn btn-outline-info border-2 button-reset" th:title="'Reset Filter'">
+                                <i class="bi bi-x-lg"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card row p-2 mb-4 border border-3 border-info-subtle bg-light shadow"
+                 sec:authorize="hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).STUDENT_MANAGER.name())">
+                <div class="card-body col">
+                    <div class="card-title row">
+                        <p class="text-info fs-5 fw-bold p-0 m-0">Add record</p>
+                        <p class="text-secondary fw-lighter p-0 m-0" style="font-size: 0.8rem;">
+                            Add new record to the end of the table
+                        </p>
+                    </div>
+
+                    <form class="card-text col mt-3" id="formInsert"
+                          th:method="'get'" th:action="@{/students}">
+                        <div class="col d-flex justify-content-evenly align-content-center text-center p-0 m-0">
+                            <a th:href="@{/students/add}" id="btn-add-student"
+                               class="btn btn-outline-info border-2" role="button" th:title="'Add record'">
+                                <i class="bi bi-plus-lg"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <table id="studentTable" class="table table-sm table-hover font-monospace
+                   table-bordered border border-3 border-info-subtle shadow-lg">
+                <thead class="table-info text-center fw-medium text-secondary-emphasis">
+                <tr>
+                    <th class="text-center align-content-center text-info">#</th>
+
+                    <div class="p-0 m-0" th:each="fieldName : ${fields}">
+                        <th class="text-center align-content-center">
+                            <div class="d-flex p-0 m-0">
+                                <div class="flex-grow-1 align-content-center justify-content-center p-0 m-0">
+                                    <span class="">
+                                         <a class="sortLink link-info link-offset-2 link-offset-3-hover link-underline
+                                                   link-underline-opacity-0 link-underline-opacity-75-hover"
+                                            th:id="${fieldName[0]}" th:text="${fieldName[1]}"
+                                            onclick="applySort(this)"></a>
+                                    </span>
+                                </div>
+                                <div class="d-none flex-shrink-1 align-content-center justify-content-end ms-2 p-0 m-0"
+                                     style="width: 20px;">
+                                    <button type="button" class="btn bg-transparent p-0 m-0" title="Sort records">
+                                        <i class="bi bi-sort-down-alt sortingAsc" th:title="'Ascending Sort'"></i>
+                                        <i class="bi bi-sort-down sortingDesc" th:title="'Descending Sort'"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </th>
+                    </div>
+
+                    <th class="text-center align-content-center text-info"
+                        sec:authorize="hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).STUDENT_MANAGER.name())
+                        and hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).ENTRANT_VIEWER.name())">Operations</th>
+                    <th class="text-center align-content-center text-info"
+                        sec:authorize="!hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).STUDENT_MANAGER.name())
+                        and hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).ENTRANT_VIEWER.name())">Entrant Info</th>
+                </tr>
+                </thead>
+
+                <tbody class="table-light fw-light text-primary-emphasis" th:each="student, iterStat : ${students}">
+                <tr>
+                    <td class="text-center align-content-center" th:text="${iterStat.index + 1}"></td>
+                    <td class="text-start align-content-center"
+                        th:text="${student?.entrant?.surname} + ' ' + ${student?.entrant?.name} + ' ' + ${student?.entrant?.patronymic}"></td>
+                    <td class="text-center align-content-center" th:switch="${student?.fundingType?.name()}">
+                        <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.FundingType).CONTRACT.name()}"
+                              style="color: #fd7e14;" th:text="${student?.fundingType?.getValue()}"></span>
+                        <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.FundingType).BUDGET.name()}"
+                              style="color: #6f42c1;" th:text="${student?.fundingType?.getValue()}"></span>
+                    </td>
+                    <td class="text-center align-content-center" th:switch="${student?.scholarshipStatus?.name()}">
+                        <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.ScholarshipStatus).ENHANCED.name()}"
+                              style="color: #20c997;" th:text="${student?.scholarshipStatus?.getValue()}"></span>
+                        <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.ScholarshipStatus).ORDINARY.name()}"
+                              style="color: #0d6efd;" th:text="${student?.scholarshipStatus?.getValue()}"></span>
+                        <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.ScholarshipStatus).NONE.name()}"
+                              style="color: #6c757d;" th:text="${student?.scholarshipStatus?.getValue()}"></span>
+                    </td>
+                    <td class="text-start align-content-center" th:text="${student?.corporateEmail}"></td>
+                    <td class="text-center align-content-center"
+                        sec:authorize="hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).ENTRANT_VIEWER.name())">
+                        <div class="d-flex justify-content-evenly p-0 m-0"
+                             sec:authorize="hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).ENTRANT_VIEWER.name())">
+                            <a type="button" th:href="@{/entrants/__${student?.entrant?.id}__/view}"
+                               class="p-0 m-0 border border-0 bg-transparent button-linked-entrant"
+                               th:title="'Entrant info'">
+                                <i class="bi bi-person-rolodex text-info"></i>
+                            </a>
+                            <a type="button" th:href="@{/students/__${student?.id}__/edit}"
+                               sec:authorize="hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).STUDENT_MANAGER.name())"
+                               class="p-0 m-0 border border-0 bg-transparent button-update" th:title="'Edit record'">
+                                <i class="bi bi-pencil text-warning"></i>
+                            </a>
+                            <a type="button" th:href="@{/students/__${student?.id}__/delete}"
+                               sec:authorize="hasRole(T(ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.enums.Role).STUDENT_MANAGER.name())"
+                               class="p-0 m-0 border border-0 bg-transparent button-delete" th:title="'Delete record'">
+                                <i class="bi bi-trash3 text-danger"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p th:if="${students == null or students.isEmpty()}" class="text-dark text-center">No data available</p>
+            <br>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a th:href="@{/home}" class="btn btn-outline-info" type="button">
+            <i class="bi bi-house"></i>
+        </a>
+    </div>
+</div>
+
+<footer th:replace="~{component/Footer :: footer}"></footer>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        setSearchPatternAttr();
+        setSearchInputValidity();
+
+        setInputValueFromGetParams();
+    });
+
+    function setSearchPatternAttr() {
+        const regexSearch = new RegExp("^[А-ЩЬЮЯЄІЇҐа-щьюяєіїґ'\\-\\d ]{1,200}$");
+        document.getElementById('inputSearch').setAttribute('pattern', regexSearch.source);
+    }
+
+    function setSearchInputValidity() {
+        const message = "Value is a Ukrainian a string between 1 and 200 chars long, optionally including numbers, dash, apostrophe, space.";
+
+        document.getElementById('inputSearch').addEventListener('input', function () {
+            if (this.validity.patternMismatch) {
+                this.setCustomValidity(message);
+            } else {
+                this.setCustomValidity('');
+            }
+
+            this.reportValidity();
+        });
+    }
+
+    function setInputValueFromGetParams() {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+        const inputFields = document.getElementsByTagName('input');
+
+        for (const input of inputFields) {
+            if (params.has(input.name)) {
+                switch (input.type) {
+                    case 'radio':
+                        if (input.value === params.get(input.name).trim()) {
+                            input.setAttribute('checked', 'true');
+                        }
+                        break;
+                    case 'checkbox':
+                        const paramValues = params.get(input.name).trim().split('-');
+                        paramValues.forEach(value => {
+                            if (input.value === value) {
+                                input.setAttribute('checked', 'true');
+                            }
+                        });
+                        break;
+                    default:
+                        input.value = params.get(input.name);
+                        break;
+                }
+            }
+        }
+    }
+
+    function applySort(element) {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+
+        const paramName = 'sort';
+        const paramFieldName = element.id;
+        let paramSortOrder = 'asc';
+        const currentSortValue = params.get(paramName);
+
+        if (currentSortValue) {
+            const currentSortFieldName = currentSortValue.split('-')[0];
+            const currentSortOrder = currentSortFieldName === paramFieldName ? currentSortValue.split('-')[1] : '';
+            paramSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+        }
+
+        params.set(paramName, paramFieldName + '-' + paramSortOrder);
+
+        const newURL = currentURL.pathname + '?' + params.toString();
+        element.setAttribute('href', newURL);
+    }
+
+    function applySearch(linkButton) {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+
+        setFilteringParameter(params, document.getElementById('inputSearch'));
+
+        const newURL = currentURL.pathname + '?' + params.toString();
+        linkButton.setAttribute('href', newURL);
+    }
+
+    function resetSearch(linkButton) {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+
+        resetFilteringParameter(params, document.getElementById('inputSearch'));
+
+        const newURL = currentURL.pathname + '?' + params.toString();
+        document.getElementById('formSearch').reset();
+        linkButton.setAttribute('href', newURL);
+    }
+
+    function applyFilterFundingType(linkButton) {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+
+        const inputContract = document.getElementById('fundingTypeContract');
+        const inputBudget = document.getElementById('fundingTypeBudget');
+
+        console.log("inputContract.checked: ", inputContract.checked);
+        console.log("inputBudget.checked: ", inputBudget.checked);
+
+        if (inputContract.checked) setFilteringParameter(params, inputContract);
+        if (inputBudget.checked) setFilteringParameter(params, inputBudget);
+
+        const newURL = currentURL.pathname + '?' + params.toString();
+        console.log(newURL);
+        linkButton.setAttribute('href', newURL);
+    }
+
+    function resetFilterFundingType(linkButton) {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+
+        resetFilteringParameter(params, document.getElementById('fundingTypeContract'));
+        resetFilteringParameter(params, document.getElementById('fundingTypeBudget'));
+
+        const newURL = currentURL.pathname + '?' + params.toString();
+        document.getElementById('formFilterFundingType').reset();
+        linkButton.setAttribute('href', newURL);
+    }
+
+    function applyFilterScholarshipStatus(linkButton) {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+
+        function setFilteringParameterForScholarship(params, inputElement) {
+            const paramName = inputElement.name;
+            const paramValue = inputElement.value.toString().trim();
+
+            if (paramValue.length > 0) {
+                if (params.has(paramName)) {
+                    const newParamValue = params.get(paramName) + "-" + paramValue;
+                    params.set(paramName, newParamValue);
+                } else {
+                    params.set(paramName, paramValue);
+                }
+            } else {
+                params.delete(paramName);
+            }
+        }
+
+        const inputEnhanced = document.getElementById('scholarshipStatusEnhanced');
+        const inputOrdinary = document.getElementById('scholarshipStatusOrdinary');
+        const inputNone = document.getElementById('scholarshipStatusNone');
+
+        params.delete(inputEnhanced.name);
+
+        if (inputEnhanced.checked) setFilteringParameterForScholarship(params, inputEnhanced);
+        if (inputOrdinary.checked) setFilteringParameterForScholarship(params, inputOrdinary);
+        if (inputNone.checked) setFilteringParameterForScholarship(params, inputNone);
+
+        const newURL = currentURL.pathname + '?' + params.toString();
+        linkButton.setAttribute('href', newURL);
+    }
+
+    function resetFilterScholarshipStatus(linkButton) {
+        const currentURL = new URL(window.location.href);
+        const params = new URLSearchParams(currentURL.searchParams);
+
+        resetFilteringParameter(params, document.getElementById('scholarshipStatusEnhanced'));
+        resetFilteringParameter(params, document.getElementById('scholarshipStatusOrdinary'));
+        resetFilteringParameter(params, document.getElementById('scholarshipStatusNone'));
+
+        const newURL = currentURL.pathname + '?' + params.toString();
+        document.getElementById('formFilterScholarshipStatus').reset();
+        linkButton.setAttribute('href', newURL);
+    }
+
+    function setFilteringParameter(params, inputElement) {
+        const paramName = inputElement.name;
+        const paramValue = inputElement.value.toString().trim();
+
+        if (paramValue.length > 0) {
+            params.set(paramName, paramValue);
+        } else {
+            params.delete(paramName);
+        }
+    }
+
+    function resetFilteringParameter(params, inputElement) {
+        const paramName = inputElement.name;
+        params.delete(paramName);
+
+        if (inputElement.type === 'radio' || inputElement.type === 'checkbox') {
+            inputElement.removeAttribute('checked');
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

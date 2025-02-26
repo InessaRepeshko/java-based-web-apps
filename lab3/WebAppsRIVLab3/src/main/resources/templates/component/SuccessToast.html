@@ -1,0 +1,24 @@
+<div th:fragment="successToast" th:if="${successMessage != null}">
+    <div role="alert" class="alert alert-success alert-dismissible fade show z-1000 fixed-top top-0 start-50
+         translate-middle-x border-2 border-success-subtle">
+        <div class="alert-heading">
+            <p class="text-center fw-bold">
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span class="ms-2" th:switch="${mode}">
+                    <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).EDIT}"
+                          th:text="${isSaved != null && isSaved ? 'Successfully saved' : 'Successfully updated'}"></span>
+                    <span th:case="${T(ntukhpi.csit.semit.riv.webappsrivlab3.controller.Mode).VIEW_TABLE}"
+                          th:text="'Successfully deleted'"></span>
+                    <span th:case="*"
+                          th:text="'Action Successful'"></span>
+                </span>
+            </p>
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <hr>
+
+        <p class="mb-0 text-center" th:text="${successMessage}"></p>
+    </div>
+</div>

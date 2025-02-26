@@ -1,0 +1,7 @@
+{
+  "name": "WebAppsRIVLab2",
+  "version": "1.0.0",
+  "dependencies": {
+    "date-fns": "^4.1.0"
+  }
+}

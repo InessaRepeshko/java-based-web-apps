@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${mode.getValue() + ' Entrant'}">Entrant Form</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/image/icon/favicon_square.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<header th:replace="~{component/NavigationBar :: header}"></header>
+
+<div th:replace="~{component/ErrorToast :: errorToast}"></div>
+<div th:replace="~{component/WarningToast :: warningToast}"></div>
+<div th:replace="~{component/SuccessToast :: successToast}"></div>
+
+<div class="container w-50 text-center justify-content-center">
+    <div class="card border border-3 border-info-subtle shadow bg-body-tertiary rounded m-0 mt-5 p-0"
+         th:with="isEditOrDelete = ${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).EDIT
+                                          or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE},
+                       isDeleteOrView = ${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE
+                                        or mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).VIEW_FORM},
+                       isNotDeleteAndNotView = ${mode ne T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).EDIT
+                                      and mode ne T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).VIEW_FORM}">
+        <div class="card-header bg-info-subtle border-bottom border-3 border-info-subtle
+                    font-monospace text-center text-info fw-bolder"
+             th:text="${mode.getValue() + ' Entrant'}">Entrant Form
+        </div>
+
+        <form class="card-body bg-light font-monospace p-5 m-0" id="entrantForm"
+              th:object="${entrant}"
+              th:with="actionUrl=
+                 ${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).ADD ? '/entrants/add' :
+                  (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).VIEW_FORM ? '/entrants/view' :
+                  (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).EDIT ? ('/entrants/' + entrant?.id + '/edit') :
+                  (mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE ? ('/entrants/' + entrant?.id + '/delete') : '')))}"
+              th:action="@{${actionUrl}}" th:method="'post'">
+
+            <div class="d-none card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputEntrantId" class=" col-3 input-group-text text-info">Id</label>
+                    <input id="inputEntrantId" class="col-auto form-control text-dark" type="hidden" required
+                           th:field="*{id}" th:minlength="1" th:maxlength="100"
+                           th:value="${isEditOrDelete ? entrant?.id : null}"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputCaseNumber" class="col-3 input-group-text text-info">Case Number</label>
+                    <input id="inputCaseNumber" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{caseNumber}" th:minlength="5" th:maxlength="20"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputSurname" class=" col-3 input-group-text text-info">Surname</label>
+                    <input id="inputSurname" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{surname}" th:minlength="1" th:maxlength="50"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputName" class=" col-3 input-group-text text-info">Name</label>
+                    <input id="inputName" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{name}" th:minlength="1" th:maxlength="50"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputPatronymic" class=" col-3 input-group-text text-info">Patronymic</label>
+                    <input id="inputPatronymic" class="col-auto form-control text-dark" type="text" required
+                           th:field="*{patronymic}" th:minlength="1" th:maxlength="50"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputBirthday" class=" col-3 input-group-text text-info">Birthday</label>
+                    <input id="inputBirthday" class="col-auto form-control text-dark" type="date" required
+                           th:name="${'birthday'}"
+                           th:value="${#temporals.format(entrant?.birthday, 'yyyy-MM-dd')}"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="card-text d-flex align-content-center justify-content-start mb-4">
+                <div class="col-3 border border-1 border-info-subtle rounded d-inline-flex p-0 m-0 me-3">
+                    <span class="d-flex flex-fill input-group-text text-info">Gender</span>
+                </div>
+
+                <div class="col-auto btn-group" role="group" aria-label="Gender radio toggle button group">
+                    <input type="hidden"
+                           th:field="*{gender}"
+                           th:value="${entrant?.gender}"
+                           th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE}">
+
+                    <input id="inputGenderMale" type="radio" class="btn-check" autocomplete="off"
+                           th:field="*{gender}"
+                           th:value="${true}"
+                           th:disabled="${isDeleteOrView}">
+                    <label class="btn btn-outline-info" for="inputGenderMale">Male</label>
+
+                    <input id="inputGenderFemale" type="radio" class="btn-check" autocomplete="off"
+                           th:field="*{gender}"
+                           th:value="${false}"
+                           th:disabled="${isDeleteOrView}">
+                    <label class="btn btn-outline-info" for="inputGenderFemale">Female</label>
+                </div>
+            </div>
+
+            <div class="card-text mb-4">
+                <div class="input-group border border-1 border-info-subtle rounded ">
+                    <label for="inputRatingScore" class="col-3 input-group-text text-info">Rating score</label>
+                    <input id="inputRatingScore" class="col-auto form-control text-dark" type="number" required
+                           th:min="120.001" th:max="200.000" th:step="0.001"
+                           th:field="*{ratingScore}"
+                           th:readonly="${isDeleteOrView}">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-evenly">
+                <button type="submit" class="btn btn-outline-info border-2"
+                        th:title="'Save record'"
+                        th:if="${isNotDeleteAndNotView}">
+                    <i class="bi bi-floppy"></i>
+                </button>
+
+                <button type="reset" class="btn btn-outline-info border-2"
+                        onclick="form.reset()"
+                        th:title="'Reset fields'"
+                        th:if="${isNotDeleteAndNotView}">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+                <button type="button" class="btn btn-outline-info border-2"
+                        onclick="submitConfirmation()"
+                        th:title="'Delete record'"
+                        th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).DELETE}">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-outline-info me-5" type="button"
+                th:title="'Go Back'"
+                onclick="window.history.back()"
+                th:if="${mode eq T(ntukhpi.csit.semit.riv.webappsrivlab4.controller.Mode).VIEW_FORM}">
+            <i class="bi bi-box-arrow-in-left"></i>
+        </button>
+
+        <a class="btn btn-outline-info" type="button"
+           th:title="'Go to Entrant Table'"
+           th:href="@{/entrants}">
+            <i class="bi bi-table"></i>
+        </a>
+    </div>
+</div>
+
+<footer th:replace="~{component/Footer :: footer}"></footer>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        setAllInputsValidity();
+    });
+
+    function setAllInputsValidity() {
+        setPatternAttr();
+        setBirthdayLimit();
+
+        setStringInputValidity();
+        setBirthdayValidity();
+        setRatingScoreValidity();
+
+        const form = document.getElementById('entrantForm');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.reportValidity();
+            } else {
+                form.submit();
+            }
+        });
+
+        function setPatternAttr() {
+            const regexCaseNumber = new RegExp("^(?=.{5,20}$)[А-ЩЮЯҐЄІЇ]{1,10}\\d{2}[\\-]\\d{1,4}$");
+            const regexNames = new RegExp("^(?=.{1,50}$)[А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?(?:[ \\-][А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?)*$");
+
+            document.getElementById('inputCaseNumber').setAttribute('pattern', regexCaseNumber.source);
+            document.getElementById('inputSurname').setAttribute('pattern', regexNames.source);
+            document.getElementById('inputName').setAttribute('pattern', regexNames.source);
+            document.getElementById('inputPatronymic').setAttribute('pattern', regexNames.source);
+        }
+
+        function setBirthdayLimit() {
+            document.getElementById('inputBirthday').setAttribute('min', getBirthdayMinValue());
+            document.getElementById('inputBirthday').setAttribute('max', getBirthdayMaxValue());
+
+            function getBirthdayMinValue() {
+                const today = new Date();
+                return new Date(today.getFullYear() - 110, today.getMonth(), today.getDate()).toISOString().split('T')[0];
+            }
+
+            function getBirthdayMaxValue() {
+                const today = new Date();
+                return new Date(today.getFullYear() - 16, today.getMonth(), today.getDate()).toISOString().split('T')[0];
+            }
+        }
+
+        function setBirthdayValidity() {
+            const regexpDate = new RegExp("^(?=.{10}$)\\d{4}\-\\d{2}\-\\d{2}");
+            const messages = [
+                "Birthday cannot be empty.",
+                "Value must be date from 110 to 16 years ago today."
+            ];
+
+            document.getElementById('inputBirthday').addEventListener('submit', function () {
+                const minDate = new Date(this.min);
+                const maxDate = new Date(this.max);
+                const selectedDate = new Date(this.value);
+
+                if (!regexpDate.test(selectedDate.toString())) {
+                    this.setCustomValidity(messages[0]);
+                } else if (selectedDate < minDate || selectedDate > maxDate) {
+                    this.setCustomValidity(messages[1]);
+                } else {
+                    this.setCustomValidity("");
+                }
+
+                this.reportValidity();
+            });
+        }
+
+        function setRatingScoreValidity() {
+            const message = "Value must be decimal number in range from 120.001 to 200.000 inclusive.";
+
+            document.getElementById('inputRatingScore').addEventListener('input', function () {
+                const minVal = parseFloat(this.min);
+                const maxVal = parseFloat(this.max);
+                const selectedVal = parseFloat(this.value);
+
+                if (selectedVal < minVal || selectedVal > maxVal) {
+                    this.setCustomValidity(message);
+                } else {
+                    this.setCustomValidity("");
+                }
+
+                this.reportValidity();
+            });
+        }
+
+        function setStringInputValidity() {
+            const messages = [
+                "Value must be Ukrainian char string between 5 and 20 chars long in format 'LLLLLLLLLLNN-NNNN'.",
+                "Value must be Ukrainian char string between 1 and 50 chars long, including space and apostrophe.",
+                "Value must be Ukrainian char string between 1 and 50 chars long, including space and apostrophe.",
+                "Value must be Ukrainian char string between 1 and 50 chars long, including space and apostrophe."
+            ];
+
+            document.getElementById('entrantForm')
+                .querySelectorAll('input[pattern]')
+                .forEach((input, i) => {
+                    input.addEventListener('input', function () {
+                        if (this.validity.patternMismatch) {
+                            this.setCustomValidity(messages[i]);
+                        } else {
+                            this.setCustomValidity('');
+                        }
+
+                        this.reportValidity();
+                    });
+                });
+        }
+
+    }
+
+    function submitConfirmation() {
+        const message = 'Are you sure you want to delete that record?';
+
+        if (confirm(message) === true) {
+            document.getElementById('entrantForm').submit();
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

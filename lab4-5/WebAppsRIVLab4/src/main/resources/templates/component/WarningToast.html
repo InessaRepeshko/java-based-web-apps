@@ -1,0 +1,14 @@
+<div th:fragment="warningToast" th:if="${warningMessage != null}">
+    <div role="alert" class="alert alert-warning alert-dismissible fade show z-1000 fixed-top top-0 start-50
+         translate-middle-x border-2 border-warning-subtle">
+        <div class="alert-heading">
+            <p class="text-center fw-bold">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span th:text="${warningTitle}"></span>
+            </p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <hr>
+        <p class="mb-0 text-center" th:text="${warningMessage}"></p>
+    </div>
+</div>
