@@ -1,3 +1,51 @@
+<div align="center"><img src="screens/favicon.png" width="200"/></div>
+<h1 align="center">Student Database Viewer</h1>
+
+<p align="center">
+   <img src="https://img.shields.io/badge/Java-007396?logo=java&logoColor=white" alt="Java" />
+   <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot" />
+   <img src="https://img.shields.io/badge/Spring_Security-6DB33F?logo=springsource&logoColor=white" alt="Spring Security" />
+   <img src="https://img.shields.io/badge/Spring_Data_JPA-6DB33F?logo=springsource&logoColor=white" alt="Spring Data JPA" />
+   <img src="https://img.shields.io/badge/Hibernate-59666C?logo=hibernate&logoColor=white" alt="Hibernate" />
+   <img src="https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white" alt="MySQL" />
+   <img src="https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white" alt="Maven" />
+   <img src="https://img.shields.io/badge/Tomcat-F8DC75?logo=apachetomcat&logoColor=black" alt="Tomcat" />
+   <img src="https://img.shields.io/badge/Thymeleaf-005F0F?logo=thymeleaf&logoColor=white" alt="Thymeleaf" />
+   <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" alt="HTML5" />
+   <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white" alt="CSS3" />
+   <img src="https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white" alt="Bootstrap" />
+   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript" />
+   <img src="https://img.shields.io/badge/JUnit-25A162?logo=junit5&logoColor=white" alt="JUnit" />
+   <img src="https://img.shields.io/badge/Lombok-2A2A2A?logo=lombok&logoColor=white" alt="Lombok" />
+</p>
+
+
+
+## Table of Contents
+- [Java-based Web Applications](#java-based-web-applications)
+- ["Student Database Viewer" App](#student-database-viewer-app)
+  - [Overview: Student Admission and Management System](#overview-student-admission-and-management-system)
+  - [Project Structure](#project-structure)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+      - [Stack](#stack)
+      - [Key Technologies](#key-technologies)
+  - [Database Diagram](#database-diagram)
+    - [Tables](#tables)
+  - [Setup and Installation](#setup-and-installation)
+      - [Prerequisites](#prerequisites)
+      - [Steps](#steps)
+      - [Testing](#testing)
+  - [Usage](#usage)
+  - [Web Application Results](#web-application-results)
+      - [1 Registering a New User and Displaying Available Functionality for a Student Viewer](#1-registering-a-new-user-and-displaying-available-functionality-for-a-student-viewer)
+      - [2 Available Functionality for an Entrant Viewer](#2-available-functionality-for-an-entrant-viewer)
+      - [3 Available Functionality for an Entrant Manager](#3-available-functionality-for-an-entrant-manager)
+      - [4 Available Functionality for a Student Manager](#4-available-functionality-for-a-student-manager)
+      - [5 Available Functionality for a Administrator](#5-available-functionality-for-a-administrator)
+
+
+
 # Java-based Web Applications
 
 The repository contains the results of the Laboratory Trainings for the course "Java-based Web Applications" (2024) during studies at National Technical University "Kharkiv Polytechnic Institute". 
