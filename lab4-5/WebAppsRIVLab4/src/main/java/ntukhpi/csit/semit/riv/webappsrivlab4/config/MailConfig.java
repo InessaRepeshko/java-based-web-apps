@@ -33,8 +33,8 @@ public class MailConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.ethereal.email");
         mailSender.setPort(587);
-        mailSender.setUsername("claire.mraz76@ethereal.email");
-        mailSender.setPassword("3NtfRMmpaDnAxaWkUE");
+        mailSender.setUsername("wilmer.ankunding@ethereal.email");
+        mailSender.setPassword("GVDW5ZTPSSXuAnRh1y");
 
         Properties properties = mailSender.getJavaMailProperties();
         properties.put("mail.debug", true);
