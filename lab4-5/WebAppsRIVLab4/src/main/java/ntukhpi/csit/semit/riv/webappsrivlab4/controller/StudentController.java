@@ -123,8 +123,8 @@ public class StudentController {
             }
 
             if (result.hasErrors()) {
-                logger.error("Student creation failed: {}", result.getAllErrors().toArray(e -> e.getDefaultMessage() + ".\n").toString());
-                throw new CustomServiceException(result.getAllErrors().toArray(e -> e.getDefaultMessage() + ".\n").toString());
+                logger.error("Student creation failed:\n" + result.getAllErrors().forEach(e -> e.getDefaultMessage() + ".\n").toString());
+                throw new CustomServiceException("Student creation failed:\n" + result.getAllErrors().forEach(e -> e.getDefaultMessage() + ".\n").toString());
             }
 
             studentToSave.setEntrant(entrantService.findEntrantById(studentToSave.getEntrant().getId()));
@@ -219,8 +219,8 @@ public class StudentController {
             }
 
             if (result.hasErrors()) {
-                logger.error("Student update failed: {}", result.getAllErrors().toArray(e -> e.getDefaultMessage() + ".\n").toString());
-                throw new CustomServiceException(result.getAllErrors().toArray(e -> e.getDefaultMessage() + ".\n").toString());
+                logger.error("Student update failed:\n" + result.getAllErrors().forEach(e -> e.getDefaultMessage() + ".\n").toString());
+                throw new CustomServiceException("Student update failed:\n" + result.getAllErrors().forEach(e -> e.getDefaultMessage() + ".\n").toString());
             }
 
             Student updatedStudent;
