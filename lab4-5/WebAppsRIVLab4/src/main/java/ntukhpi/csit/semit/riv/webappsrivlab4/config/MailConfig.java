@@ -1,5 +1,6 @@
 package ntukhpi.csit.semit.riv.webappsrivlab4.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -28,18 +29,40 @@ import java.util.Properties;
  */
 @Configuration
 public class MailConfig {
+    
+    @Value("${spring.mail.host:smtp.ethereal.email}")
+    private String mailHost;
+    
+    @Value("${spring.mail.port:587}")
+    private int mailPort;
+    
+    @Value("${spring.mail.username}")
+    private String mailUsername;
+    
+    @Value("${spring.mail.password}")
+    private String mailPassword;
+    
+    @Value("${spring.mail.properties.mail.debug:false}")
+    private boolean mailDebug;
+    
     @Bean
-    JavaMailSender createMailSender() {
+    public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.ethereal.email");
-        mailSender.setPort(587);
-        mailSender.setUsername("wilmer.ankunding@ethereal.email");
-        mailSender.setPassword("GVDW5ZTPSSXuAnRh1y");
+        mailSender.setHost(mailHost);
+        mailSender.setPort(mailPort);
+        mailSender.setUsername(mailUsername);
+        mailSender.setPassword(mailPassword);
 
         Properties properties = mailSender.getJavaMailProperties();
-        properties.put("mail.debug", true);
-        properties.put("mail.smtp.DTO", true);
-        properties.put("mail.smtp.starttls.enable", true);
+        properties.put("mail.transport.protocol", "smtp");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.starttls.required", "true");
+        properties.put("mail.debug", String.valueOf(mailDebug));
+        properties.put("mail.smtp.ssl.trust", mailHost);
+        properties.put("mail.smtp.timeout", "5000");
+        properties.put("mail.smtp.connectiontimeout", "5000");
+        properties.put("mail.smtp.writetimeout", "5000");
 
         return mailSender;
     }

@@ -4,7 +4,10 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import ntukhpi.csit.semit.riv.webappsrivlab4.service.CustomServiceException;
 import ntukhpi.csit.semit.riv.webappsrivlab4.service.mail.MailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -39,7 +42,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MailServiceImpl implements MailService {
+    private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
     private final JavaMailSender mailSender;
+    
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
     @Autowired
     public MailServiceImpl(JavaMailSender mailSender) {
@@ -52,17 +59,27 @@ public class MailServiceImpl implements MailService {
                           String content,
                           boolean isHtmlContent) {
         try {
+            logger.info("Attempting to send email to: {} with subject: {}", receiver, subject);
+            
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
+            helper.setFrom(fromEmail);
             helper.setTo(receiver);
             helper.setSubject(subject);
             helper.setText(content, isHtmlContent);
 
             mailSender.send(message);
+            logger.info("Email successfully sent to: {}", receiver);
+            
         } catch (MessagingException e) {
-            throw new CustomServiceException("Failed to send a password reset email. " +
-                    "An error occurred while generating the email.");
+            logger.error("Failed to send email to: {} - Error: {}", receiver, e.getMessage(), e);
+            throw new CustomServiceException("Failed to send email to " + receiver + ". " +
+                    "Error: " + e.getMessage());
+        } catch (Exception e) {
+            logger.error("Unexpected error while sending email to: {} - Error: {}", receiver, e.getMessage(), e);
+            throw new CustomServiceException("Unexpected error while sending email to " + receiver + ". " +
+                    "Error: " + e.getMessage());
         }
     }
 
@@ -76,6 +93,7 @@ public class MailServiceImpl implements MailService {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
             helper.setTo(receiver);
             helper.setSubject(subject);
             helper.setText(content, isHtmlContent);

@@ -23,7 +23,7 @@ services:
         value: 587
       - key: MAIL_USERNAME
         value: wilmer.ankunding@ethereal.email
-        sync: false
       - key: MAIL_PASSWORD
         value: GVDW5ZTPSSXuAnRh1y
-        sync: false
+      - key: MAIL_DEBUG
+        value: true

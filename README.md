@@ -36,6 +36,7 @@
       - [Prerequisites](#prerequisites)
       - [Steps](#steps)
       - [Testing](#testing)
+  - [Fake data](#fake-data)
   - [Usage](#usage)
   - [Web Application Results](#web-application-results)
       - [1 Registering a New User and Displaying Available Functionality for a Student Viewer](#1-registering-a-new-user-and-displaying-available-functionality-for-a-student-viewer)
@@ -226,6 +227,30 @@ The structure of the test sets is shown below.
 ![EntrantServiceTest](screens/test_entrantServiceTest.png)
 ![StudentServiceTest](screens/test_studentServiceTest.png)
 ![UserServiceTest](screens/test_userServiceTest.png)
+
+
+
+## Fake data
+
+Here is the fake data for presentations.
+
+User data for testing:
+* full name:
+    ```
+    Тестовий Користувач Тест
+    ```
+* email:
+    ```
+    test.user@ntu.khpi.edu.ua
+    ```
+* username:
+    ```
+    test.user
+    ```
+* password:
+    ```
+    Password123!$
+    ```
 
 
 
