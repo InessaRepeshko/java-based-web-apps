@@ -105,8 +105,8 @@
     });
 
     function setEmailInputValidity() {
-        const regexUsername = /^(?=.{8,32}$)[a-zA-Z0-9\W]+$/;
-        const regexCorporateEmail = /"^[a-z](\\.?[a-z]+){1,99}@[a-z]{1,10}\\.khpi\\.edu\\.ua$"/;
+        const regexUsername = /^(?=.{8,32}$)[a-zA-Z0-9._-]+$/;
+        const regexCorporateEmail = /^(?=.{17,123}$)[a-z](\.?[a-z]+){1,99}@[a-z]{1,10}\.khpi\.edu\.ua$/;
 
         const message = "Enter corporate email or username. " +
             "The corporate email should match the format 'name.surname@faculty.khpi.edu.ua'. " +
