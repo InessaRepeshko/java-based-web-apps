@@ -95,9 +95,9 @@ public class StudentController {
     @GetMapping("/students/add")
     public String showCreateStudentForm(Model model) {
         Student student = new Student();
-        student.setFundingType(FundingType.BUDGET);
-        student.setScholarshipStatus(ScholarshipStatus.ORDINARY);
-        student.setCorporateEmail("regina.marchuk@cs.khpi.edu.ua");
+        
+        Entrant emptyEntrant = new Entrant();
+        student.setEntrant(emptyEntrant);
 
         List<Entrant> entrantList = entrantService.findEntrantsWithoutStudents();
 
@@ -116,9 +116,17 @@ public class StudentController {
         model.addAttribute("mode", Mode.ADD);
 
         try {
+            if (studentToSave.getEntrant() == null || studentToSave.getEntrant().getId() == null) {
+                result.rejectValue("entrant.id", "NotNull", "Entrant not selected for student creation");
+                logger.error("Entrant not selected for student creation");
+                throw new CustomServiceException("Entrant not selected for student creation");
+            }
+
             if (result.hasErrors()) {
                 result.getAllErrors().forEach(e -> logger.error(e.toString()));
-                throw new CustomServiceException(result.getAllErrors().toString());
+                StringBuilder errorMessage = new StringBuilder("Student creation failed:\n");
+                result.getAllErrors().forEach(e -> errorMessage.append(e.getDefaultMessage()).append(".\n"));
+                throw new CustomServiceException(errorMessage.toString());
             }
 
             studentToSave.setEntrant(entrantService.findEntrantById(studentToSave.getEntrant().getId()));
@@ -205,9 +213,18 @@ public class StudentController {
         model.addAttribute("mode", Mode.EDIT);
 
         try {
+            // Перевіряємо чи обрано entrant
+            if (studentToUpdate.getEntrant() == null || studentToUpdate.getEntrant().getId() == null) {
+                result.rejectValue("entrant.id", "NotNull", "Entrant not selected for student update");
+                logger.error("Entrant not selected for student update");
+                throw new CustomServiceException("Entrant not selected for student update");
+            }
+
             if (result.hasErrors()) {
                 result.getAllErrors().forEach(e -> logger.error(e.toString()));
-                throw new CustomServiceException(result.getAllErrors().toString());
+                StringBuilder errorMessage = new StringBuilder("Student update failed:\n");
+                result.getAllErrors().forEach(e -> errorMessage.append(e.getDefaultMessage()).append(".\n"));
+                throw new CustomServiceException(errorMessage.toString());
             }
 
             Student updatedStudent;

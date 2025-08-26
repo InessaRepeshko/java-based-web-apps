@@ -173,7 +173,7 @@
         function setPatternAttr() {
             const regexNames = new RegExp("^(?=.{1,50}$)[А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?(?:[ \\-][А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?)*$");
             const regexCorporateEmail = new RegExp("^[a-z](\\.?[a-z]+){1,99}@[a-z]{1,10}\\.khpi\\.edu\\.ua$");
-            const regexUsername = /^(?=.{8,32}$)[a-zA-Z0-9\W]+$/;
+            const regexUsername = /^(?=.{8,32}$)[a-zA-Z0-9._-]+$/;
             const regexPassword = /^(?=.{8,50}$)(?=.*[A-Z])(?=.*[0-9])(?=.*[\W])[A-Za-z0-9\W]*$/;
 
             document.getElementById('inputSurname').setAttribute('pattern', regexNames.source);

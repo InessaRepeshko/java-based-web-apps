@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of the UserDetailsService interface for user authentication and authorization.
@@ -43,18 +44,25 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String userIdentifier) throws UsernameNotFoundException {
-        UserEntity userEntity = userService.findUserByUsernameOrCorporateEmail(userIdentifier);
+        try {
+            UserEntity userEntity = userService.findUserByUsernameOrCorporateEmail(userIdentifier);
 
-        if (userEntity == null) {
-            throw new UsernameNotFoundException("No userEntity found with the specified data.");
+            if (userEntity == null) {
+                throw new UsernameNotFoundException("No userEntity found with the specified data.");
+            }
+
+            return org.springframework.security.core.userdetails.User.builder()
+                    .username(userEntity.getUsername())
+                    .password(userEntity.getPassword())
+                    .roles(userEntity.getRole().name())
+                    .build();
+                    
+        } catch (Exception e) {
+            logger.error("Error loading user by username: " + userIdentifier, e);
+            throw new UsernameNotFoundException("Authentication failed for user: " + userIdentifier, e);
         }
-
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(userEntity.getUsername())
-                .password(userEntity.getPassword())
-                .roles(userEntity.getRole().name())
-                .build();
     }
 }
 

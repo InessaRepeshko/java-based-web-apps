@@ -36,6 +36,9 @@
       - [Prerequisites](#prerequisites)
       - [Steps](#steps)
       - [Testing](#testing)
+  - [Fake data](#fake-data)
+      - [User data](#user-data)
+      - [Ethereal credentials](#ethereal-credentials)
   - [Usage](#usage)
   - [Web Application Results](#web-application-results)
       - [1 Registering a New User and Displaying Available Functionality for a Student Viewer](#1-registering-a-new-user-and-displaying-available-functionality-for-a-student-viewer)
@@ -112,19 +115,20 @@ The project is structured as a series of incremental laboratory works (labs), ea
 
 1. **User Authentication & Registration**: Secure login form with password hashing (BCrypt). Admin-only user creation; self-registration assigns "STUDENT_VIEWER" role.
 2. **Role-Based Authorization**:
-   * `ADMIN`: Full CRUD on all entities (users, entrants, students).
-   * `ENTRANT_MANAGER`: Full CRUD on entrants; read-only on students.
-   * `STUDENT_MANAGER`: Full CRUD on students; read-only on entrants.
-   * `ENTRANT_VIEWER`: Read-only on entrants.
-   * `STUDENT_VIEWER`: Read-only on students.
-3. **CRUD Operations**: Create, read, update, delete for entrants, students, and users (with foreign key constraints).
-4. **Data Management**: Filtering, sorting, searching, and pagination for entity tables.
-5. **Session Handling**: Display logged-in user name/role; automatic logout after inactivity.
-6. **Validation**: Custom validators for fields (e.g., IDs, birthdays, usernames, emails).
-7. **Frontend**: Responsive UI with Bootstrap; Thymeleaf templates for dynamic content.
-8. **Database Integration**: MySQL schema with tables for entrants, students, and users (one-to-one relationship between entrants and students).
-9. **Testing**: JUnit tests for services and application functionality.
-10. **Logging**: Configured via Logback.
+   * <span style="color: #fd7e14;">**ADMIN**</span>: Full CRUD on all entities (users, entrants, students).
+   * <span style="color: #198754;">**ENTRANT_MANAGER**</span>: Full CRUD on entrants; read-only on students.
+   * <span style="color: #6f42c1;">**STUDENT_MANAGER**</span>: Full CRUD on students; read-only on entrants.
+   * <span style="color: #20c997;">**ENTRANT_VIEWER**</span>: Read-only on entrants.
+   * <span style="color: #6610f2;">**STUDENT_VIEWER**</span>: Read-only on students.
+3. **Email notification**: Automatic sending of an email with a link to reset the password to newly created users by the administrator. Sending an email to reset the password at the user's request.
+4. **CRUD Operations**: Create, read, update, delete for entrants, students, and users (with foreign key constraints).
+5. **Data Management**: Filtering, sorting, searching, and pagination for entity tables.
+6. **Session Handling**: Display logged-in user name/role; automatic logout after inactivity.
+7. **Validation**: Custom validators for fields (e.g., IDs, birthdays, usernames, emails).
+8. **Frontend**: Responsive UI with Bootstrap; Thymeleaf templates for dynamic content.
+9. **Database Integration**: MySQL schema with tables for entrants, students, and users (one-to-one relationship between entrants and students).
+10. **Testing**: JUnit tests for services and application functionality.
+11. **Logging**: Configured via Logback.
 
 
 
@@ -226,6 +230,34 @@ The structure of the test sets is shown below.
 ![EntrantServiceTest](screens/test_entrantServiceTest.png)
 ![StudentServiceTest](screens/test_studentServiceTest.png)
 ![UserServiceTest](screens/test_userServiceTest.png)
+
+
+
+## Fake data
+
+### User data
+
+Here is the fake user data for demo.
+
+| Role | Username | Password | Email |
+|:-:|:-|:-|-:|
+|<span style="color: #fd7e14;">**ADMIN**</span>|```shavlii_oleksii```|```Password123!$```|```shavlii.oleksii@ntu.khpi.edu.ua```|
+|<span style="color: #198754;">**ENTRANT_MANAGER**</span>|```burulka-liudmyla```|```Password123!$```|```burulka.liudmyla@ntu.khpi.edu.ua```|
+|<span style="color: #6f42c1;">**STUDENT_MANAGER**</span>|```voloshkov-tymur```|```Password123!$```|```voloshkov.tymur@ntu.khpi.edu.ua```|
+|<span style="color: #20c997;">**ENTRANT_VIEWER**</span>|```kulish.volodymyr```|```Password123!$```|```kulish.volodymyr@cs.khpi.edu.ua```|
+|<span style="color: #6610f2;">**STUDENT_VIEWER**</span>|```stepova.alina```|```Password123!$```|```stepova.alina@cs.khpi.edu.ua```|
+
+### Ethereal credentials
+
+[Ethereal](https://ethereal.email/) credentials for viewing sent emails:
+* login:
+    ```
+    wilmer.ankunding@ethereal.email
+    ```
+* password:
+    ```
+    GVDW5ZTPSSXuAnRh1y
+    ```
 
 
 

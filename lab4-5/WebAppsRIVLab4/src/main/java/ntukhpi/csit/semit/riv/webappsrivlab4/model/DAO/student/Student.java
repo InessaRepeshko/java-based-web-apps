@@ -1,7 +1,6 @@
 package ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.student;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -65,7 +64,6 @@ public class Student {
             foreignKey = @ForeignKey(
                     name = "fk_student_entrant",
                     foreignKeyDefinition = "FOREIGN KEY (entrant_id) REFERENCES entrants(id) ON DELETE CASCADE ON UPDATE CASCADE"))
-    @Valid
     private Entrant entrant;
 
     @Column(name = "funding_type", nullable = false)

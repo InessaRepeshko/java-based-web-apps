@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import ntukhpi.csit.semit.riv.webappsrivlab4.model.DTO.user.*;
 import ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.token.PasswordResetToken;
 import ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.user.UserEntity;
-import ntukhpi.csit.semit.riv.webappsrivlab4.model.DAO.testDataList.user.UserList;
 import ntukhpi.csit.semit.riv.webappsrivlab4.service.entity.PasswordResetTokenService;
 import ntukhpi.csit.semit.riv.webappsrivlab4.service.entity.UserService;
 import ntukhpi.csit.semit.riv.webappsrivlab4.service.CustomServiceException;
@@ -23,8 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 /**
  * Controller class for managing user authentication and authorization.
@@ -64,14 +61,11 @@ public class AuthController {
     private final UserService userService;
     private final PasswordResetTokenService tokenService;
 
-    private final List<UserTestData> userTestDataList;
-
     @Autowired
     public AuthController(UserService userService,
                           PasswordResetTokenService tokenService) {
         this.userService = userService;
         this.tokenService = tokenService;
-        this.userTestDataList = UserList.INSTANCE.getUsers();
     }
 
     @GetMapping("/")
@@ -95,9 +89,7 @@ public class AuthController {
                     "Please, sign in again!");
         }
 
-        UserTestData userTestData = userTestDataList.get(0);
-        UserLogin userLogin = UserLogin.getUserLoginFromUserTestData(userTestData);
-
+        UserLogin userLogin = new UserLogin();
         model.addAttribute("user", userLogin);
 
         return "auth/Login";
@@ -105,9 +97,7 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
-        UserTestData userTestData = userTestDataList.get(0);
-        UserRegister userRegister = UserRegister.getUserRegisterFromUserTestData(userTestData);
-
+        UserRegister userRegister = new UserRegister();
         model.addAttribute("user", userRegister);
 
         return "auth/Register";
@@ -160,9 +150,7 @@ public class AuthController {
 
     @GetMapping("/reset-password")
     public String showResetPasswordPage(Model model) {
-        UserTestData userTestData = userTestDataList.get(1);
-        UserResetPassword userResetPassword = UserResetPassword.getUserResetPasswordFromUserTestData(userTestData);
-
+        UserResetPassword userResetPassword = new UserResetPassword();
         model.addAttribute("user", userResetPassword);
 
         return "auth/ResetPassword";

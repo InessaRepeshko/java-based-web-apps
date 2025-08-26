@@ -206,9 +206,8 @@
         });
 
         function setPatternAttr() {
-            const regexUsername = /^(?=.{8,32}$)[a-zA-Z0-9\W]+$/;
+            const regexUsername = /^(?=.{8,32}$)[a-zA-Z0-9._-]+$/;
             const regexCorporateEmail = new RegExp("^[a-z](\\.?[a-z]+){1,99}@[a-z]{1,10}\\.khpi\\.edu\\.ua$");
-            // const regexUsername = new RegExp("^(?=.{8,32}$)[a-zA-Z0-9._-]+$");
             const regexNames = new RegExp("^(?=.{1,50}$)[А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?(?:[ \\-][А-ЩЮЯҐЄІЇ](?:[А-ЯҐЄІЇа-яґєіїʼ]*[А-ЯҐЄІЇа-яґєії])?)*$");
 
             document.getElementById('inputCorporateEmail').setAttribute('pattern', regexCorporateEmail.source);

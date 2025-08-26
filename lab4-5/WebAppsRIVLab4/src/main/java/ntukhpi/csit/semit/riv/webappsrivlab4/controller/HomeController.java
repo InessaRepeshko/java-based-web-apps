@@ -78,8 +78,6 @@ public class HomeController {
 
     @GetMapping("/home")
     public String showHomePage(Model model) {
-        /*model.addAttribute("user", getCurrentUser());*/
-
         return "home/Home";
     }
 
@@ -154,13 +152,11 @@ public class HomeController {
                         throw new CustomServiceException("The provided name already belongs to another user. " +
                                 "Please, check the data and try again!");
                     }
-                    System.out.println(userEntityToUpdate);
                 }
             } else {
                 throw new CustomServiceException("Invalid username entered. " +
                         "Please, check the data and try again!");
             }
-
 
             updatedUserCredentials = UserChangeCredentials.getUserChangeCredentialsFromUserEntity(
                     userService.updateUser(userEntityToUpdate));

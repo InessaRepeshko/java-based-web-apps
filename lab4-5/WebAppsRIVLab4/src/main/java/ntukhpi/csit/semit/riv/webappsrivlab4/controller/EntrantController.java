@@ -94,17 +94,8 @@ public class EntrantController {
 
     @GetMapping("/entrants/add")
     public String showCreateEntrantForm(Model model) {
-        Entrant entrant = new Entrant(
-                "КН22-0",
-                "Репешко",
-                "Інесса",
-                "Віталіївна",
-                "2000-01-01",
-                "FALSE",
-                "120.001"
-        );
-        /*Entrant entrant = new Entrant();*/
-
+        Entrant entrant = new Entrant();
+        
         model.addAttribute("entrant", entrant);
         model.addAttribute("mode", Mode.ADD);
 

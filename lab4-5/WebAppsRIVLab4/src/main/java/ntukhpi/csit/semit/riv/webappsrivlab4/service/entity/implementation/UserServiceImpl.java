@@ -100,6 +100,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserEntity> findUsersByRole(@ValidRole Role role) {
         return userRepository.findUsersByRole(role);
     }
@@ -142,6 +143,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity findUserById(@ValidId Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> {
@@ -152,6 +154,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity findUserByUsername(@ValidUsername String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> {
             String message = "No user found for passed username.";
@@ -161,6 +164,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity findUserByCorporateEmail(@ValidCorporateEmail String corporateEmail) {
         return userRepository.findByCorporateEmail(corporateEmail).orElseThrow(() -> {
             String message = "No user found for passed corporate email.";
@@ -192,6 +196,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity findUserByUsernameOrCorporateEmail(@ValidUsernameOrCorporateEmail String usernameOrCorporateEmail) {
         return userRepository.findByUsernameOrCorporateEmail(
                         usernameOrCorporateEmail,
@@ -204,6 +209,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity findUserByExample(@Valid UserEntity userEntity) {
         return userRepository.findBy(Example.of(userEntity), query -> query.first().orElse(null));
     }

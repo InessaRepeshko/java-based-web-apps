@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.env.Environment;
 
 import java.util.List;
 
@@ -51,31 +52,72 @@ public class WebAppsRivLab4Application implements CommandLineRunner {
     private final EntrantService entrantService;
     private final StudentService studentService;
     private final UserService userService;
+    private final Environment environment;
 
     @Autowired
-    public WebAppsRivLab4Application(EntrantService entrantService, StudentService studentService, UserService userService) {
+    public WebAppsRivLab4Application(EntrantService entrantService, StudentService studentService, UserService userService, Environment environment) {
         this.entrantService = entrantService;
         this.studentService = studentService;
         this.userService = userService;
+        this.environment = environment;
     }
 
     @Override
     public void run(String... args) {
-        List<UserEntity> userEntityList = UserList.INSTANCE.getUsers().stream()
-                .map(UserEntity::getUserEntityFromUserTestData)
-                .toList();
-        userService.saveAllUsers(userEntityList);
+        // Ініціалізація тестових даних тільки для development профілю
+        String[] activeProfiles = environment.getActiveProfiles();
+        boolean isProductionMode = false;
+        
+        for (String profile : activeProfiles) {
+            if ("prod".equals(profile)) {
+                isProductionMode = true;
+                break;
+            }
+        }
+        
+        if (isProductionMode) {
+            logger.info("Production mode detected. Skipping test data initialization.");
+            return;
+        }
+        
+        // Перевіряємо, чи вже є дані в базі
+        try {
+            List<UserEntity> existingUsers = userService.getAllUsers();
+            if (!existingUsers.isEmpty()) {
+                logger.info("Database already contains user data. Skipping test data initialization.");
+                return;
+            }
+        } catch (Exception e) {
+            logger.warn("Could not check existing users, proceeding with initialization: " + e.getMessage());
+        }
+        
+        logger.info("Initializing test data...");
+        
+        try {
+            List<UserEntity> userEntityList = UserList.INSTANCE.getUsers().stream()
+                    .map(UserEntity::getUserEntityFromUserTestData)
+                    .toList();
+            userService.saveAllUsers(userEntityList);
+            logger.info("User test data saved successfully.");
 
-        List<Entrant> entrantList = EntrantList.INSTANCE.getEntrants();
-        entrantService.saveAllEntrants(entrantList);
+            List<Entrant> entrantList = EntrantList.INSTANCE.getEntrants();
+            entrantService.saveAllEntrants(entrantList);
+            logger.info("Entrant test data saved successfully.");
 
-        studentService.saveAllStudents(StudentList.INSTANCE.getStudents());
+            studentService.saveAllStudents(StudentList.INSTANCE.getStudents());
+            logger.info("Student test data saved successfully.");
 
-        entrantList.forEach(entrant -> {
-            entrant.setStudentId(
-                    entrantService.findStudentIdForEntrant(entrant.getId()));
-            entrantService.updateEntrant(entrant);
-        });
+            entrantList.forEach(entrant -> {
+                entrant.setStudentId(
+                        entrantService.findStudentIdForEntrant(entrant.getId()));
+                entrantService.updateEntrant(entrant);
+            });
+            logger.info("Test data initialization completed successfully.");
+            
+        } catch (Exception e) {
+            logger.error("Error during test data initialization: " + e.getMessage());
+            // У production режимі не падаємо, просто логуємо помилку
+        }
     }
 
     public static void main(String[] args) {
