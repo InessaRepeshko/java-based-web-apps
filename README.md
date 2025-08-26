@@ -37,6 +37,8 @@
       - [Steps](#steps)
       - [Testing](#testing)
   - [Fake data](#fake-data)
+      - [User data](#user-data)
+      - [Ethereal credentials](#ethereal-credentials)
   - [Usage](#usage)
   - [Web Application Results](#web-application-results)
       - [1 Registering a New User and Displaying Available Functionality for a Student Viewer](#1-registering-a-new-user-and-displaying-available-functionality-for-a-student-viewer)
@@ -233,7 +235,9 @@ The structure of the test sets is shown below.
 
 ## Fake data
 
-Here is the fake data for presentations.
+### User data
+
+Here is the fake user data for demo.
 
 | Role | Username | Password | Email |
 |:-:|:-|:-|-:|
@@ -242,6 +246,18 @@ Here is the fake data for presentations.
 |<span style="color: #6f42c1;">**STUDENT_MANAGER**</span>|```voloshkov-tymur```|```Password123!$```|```voloshkov.tymur@ntu.khpi.edu.ua```|
 |<span style="color: #20c997;">**ENTRANT_VIEWER**</span>|```kulish.volodymyr```|```Password123!$```|```kulish.volodymyr@cs.khpi.edu.ua```|
 |<span style="color: #6610f2;">**STUDENT_VIEWER**</span>|```stepova.alina```|```Password123!$```|```stepova.alina@cs.khpi.edu.ua```|
+
+### Ethereal credentials
+
+[Ethereal](https://ethereal.email/) credentials for viewing sent emails:
+* login:
+    ```
+    wilmer.ankunding@ethereal.email
+    ```
+* password:
+    ```
+    GVDW5ZTPSSXuAnRh1y
+    ```
 
 
 
