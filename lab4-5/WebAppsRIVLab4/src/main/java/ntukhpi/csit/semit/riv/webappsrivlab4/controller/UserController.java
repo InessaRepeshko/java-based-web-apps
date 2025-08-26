@@ -92,15 +92,8 @@ public class UserController {
     public String showAddUserForm(Model model) {
         model.addAttribute("mode", Mode.ADD);
 
-        UserForm user = new UserForm(
-                null,
-                "Марчук",
-                "Регіна",
-                "Віталіївна",
-                "regina.marchuk@cs.khpi.edu.ua",
-                "regina.marchuk",
-                Role.STUDENT_VIEWER);
-
+        UserForm user = new UserForm();
+        
         model.addAttribute("user", user);
         model.addAttribute("roleList", Role.getAllRoles());
 

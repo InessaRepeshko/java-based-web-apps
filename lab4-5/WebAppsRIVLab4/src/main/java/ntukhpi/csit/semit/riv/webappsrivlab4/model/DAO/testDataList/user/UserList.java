@@ -39,11 +39,11 @@ public enum UserList {
         this.users = new ArrayList<>();
 
         List<String[]> userData = Arrays.asList(
-                new String[]{"shavlii_oleksii", "Admin123!", Role.ADMIN.name(), "shavlii.oleksii@ntu.khpi.edu.ua", "Шавлій", "Олексій", "Олександрович"},
-                new String[]{"burulka-liudmyla", "$Luda1990", Role.ENTRANT_MANAGER.name(), "burulka.liudmyla@ntu.khpi.edu.ua", "Бурулька", "Людмила", "Ярославівна"},
-                new String[]{"voloshkov-tymur", "Tymur9876*", Role.STUDENT_MANAGER.name(), "voloshkov.tymur@ntu.khpi.edu.ua", "Волошков", "Тимур", "Сергійович"},
-                new String[]{"kulish.volodymyr", "12Vova_+A", Role.ENTRANT_VIEWER.name(), "kulish.volodymyr@cs.khpi.edu.ua", "Куліш", "Володимир", "Анатолійович"},
-                new String[]{"stepova.alina", "Alina0987!", Role.STUDENT_VIEWER.name(), "stepova.alina@cs.khpi.edu.ua", "Степова", "Аліна", "Трофимівна"},
+                new String[]{"shavlii_oleksii", "Password123!$", Role.ADMIN.name(), "shavlii.oleksii@ntu.khpi.edu.ua", "Шавлій", "Олексій", "Олександрович"},
+                new String[]{"burulka-liudmyla", "Password123!$", Role.ENTRANT_MANAGER.name(), "burulka.liudmyla@ntu.khpi.edu.ua", "Бурулька", "Людмила", "Ярославівна"},
+                new String[]{"voloshkov-tymur", "Password123!$", Role.STUDENT_MANAGER.name(), "voloshkov.tymur@ntu.khpi.edu.ua", "Волошков", "Тимур", "Сергійович"},
+                new String[]{"kulish.volodymyr", "Password123!$", Role.ENTRANT_VIEWER.name(), "kulish.volodymyr@cs.khpi.edu.ua", "Куліш", "Володимир", "Анатолійович"},
+                new String[]{"stepova.alina", "Password123!$", Role.STUDENT_VIEWER.name(), "stepova.alina@cs.khpi.edu.ua", "Степова", "Аліна", "Трофимівна"},
                 new String[]{"ivanenko_anna", "Anna2023@", Role.ADMIN.name(), "ivanenko.anna@ntu.khpi.edu.ua", "Іваненко", "Анна", "Петрівна"},
                 new String[]{"tarasenko-oleh", "Oleh9876*!", Role.ENTRANT_MANAGER.name(), "tarasenko.oleh@ntu.khpi.edu.ua", "Тарасенко", "Олег", "Іванович"},
                 new String[]{"melnyk_daryna", "Daryna!555", Role.STUDENT_MANAGER.name(), "melnyk.daryna@ntu.khpi.edu.ua", "Мельник", "Дарина", "Анатоліївна"},
